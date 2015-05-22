@@ -1,4 +1,4 @@
-package snmp;
+package snmp.basic;
 
 
 import java.io.IOException;
@@ -17,10 +17,7 @@ import org.dsa.iot.dslink.node.actions.Parameter;
 import org.dsa.iot.dslink.node.value.Value;
 import org.dsa.iot.dslink.node.value.ValueType;
 import org.dsa.iot.dslink.util.Objects;
-import org.snmp4j.CommandResponder;
-import org.snmp4j.CommandResponderEvent;
 import org.snmp4j.MessageDispatcher;
-import org.snmp4j.PDU;
 import org.snmp4j.Snmp;
 import org.snmp4j.TransportMapping;
 import org.snmp4j.mp.MPv1;
@@ -32,11 +29,8 @@ import org.snmp4j.smi.Address;
 import org.snmp4j.smi.GenericAddress;
 import org.snmp4j.smi.OctetString;
 import org.snmp4j.smi.UdpAddress;
-import org.snmp4j.smi.VariableBinding;
 import org.snmp4j.transport.DefaultUdpTransportMapping;
 import org.vertx.java.core.Handler;
-import org.vertx.java.core.json.JsonArray;
-import org.vertx.java.core.json.JsonObject;
 
 
 public class SnmpLink {
@@ -80,30 +74,30 @@ public class SnmpLink {
 			USM usm = new USM(SecurityProtocols.getInstance(), localEngineID, 0);
 			disp.addMessageProcessingModel(new MPv3(usm));
 			
-			CommandResponder trapListener = new CommandResponder() {
-			     public synchronized void processPdu(CommandResponderEvent e) {
-			    	 PDU command = e.getPDU();
-			    	 if (command != null) {
-			    		 System.out.println(command.toString());
-			    		 String from = ((UdpAddress) e.getPeerAddress()).getInetAddress().getHostAddress();
-				    	 for (Node child: node.getChildren().values()) {
-				    		 Value ip = child.getAttribute("ip");
-				    		 if (ip != null && from.equals(ip.getString().split("/")[0])) {
-				    			 Node tnode = child.getChild("TRAPS");
-				    			 JsonArray traparr = new JsonArray(tnode.getValue().getString());
-				    			 JsonObject jo = new JsonObject();
-				    			 for (VariableBinding vb: command.toArray()) {
-				    				 jo.putString("VBS: "+vb.getOid().format(), vb.toValueString());
-				    			 }
-				    			 traparr.addObject(jo);
-				    			 tnode.setValue(new Value(traparr.toString()));
-				    		 }
-				    	 }
-			    	 }
-			    	 e.setProcessed(true);
-			     }
-			   };
-			   snmp.addCommandResponder(trapListener);
+//			CommandResponder trapListener = new CommandResponder() {
+//			     public synchronized void processPdu(CommandResponderEvent e) {
+//			    	 PDU command = e.getPDU();
+//			    	 if (command != null) {
+//			    		 System.out.println(command.toString());
+//			    		 String from = ((UdpAddress) e.getPeerAddress()).getInetAddress().getHostAddress();
+//				    	 for (Node child: node.getChildren().values()) {
+//				    		 Value ip = child.getAttribute("ip");
+//				    		 if (ip != null && from.equals(ip.getString().split("/")[0])) {
+//				    			 Node tnode = child.getChild("TRAPS");
+//				    			 JsonArray traparr = new JsonArray(tnode.getValue().getString());
+//				    			 JsonObject jo = new JsonObject();
+//				    			 for (VariableBinding vb: command.toArray()) {
+//				    				 jo.putString("VBS: "+vb.getOid().format(), vb.toValueString());
+//				    			 }
+//				    			 traparr.addObject(jo);
+//				    			 tnode.setValue(new Value(traparr.toString()));
+//				    		 }
+//				    	 }
+//			    	 }
+//			    	 e.setProcessed(true);
+//			     }
+//			   };
+//			   snmp.addCommandResponder(trapListener);
 			   
 			   snmp.listen();
 			

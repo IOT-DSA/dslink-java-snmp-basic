@@ -1,4 +1,4 @@
-package snmp;
+package snmp.basic;
 
 import java.io.IOException;
 import org.dsa.iot.dslink.node.Node;
@@ -43,10 +43,10 @@ public class SnmpNode {
 		act = new Action(Permission.READ, new AddFolderHandler());
 		act.addParameter(new Parameter("name", ValueType.STRING));
 		node.createChild("addFolder").setAction(act).build().setSerializable(false);
-		act = new Action(Permission.READ, new WalkHandler());
-		act.addParameter(new Parameter("name", ValueType.STRING));
-		act.addParameter(new Parameter("OID", ValueType.STRING, new Value("0.0")));
-		node.createChild("walk").setAction(act).build().setSerializable(false);
+//		act = new Action(Permission.READ, new WalkHandler());
+//		act.addParameter(new Parameter("name", ValueType.STRING));
+//		act.addParameter(new Parameter("OID", ValueType.STRING, new Value("0.0")));
+//		node.createChild("walk").setAction(act).build().setSerializable(false);
 	}
 	
 	SnmpNode(SnmpLink slink, Node mynode, AgentNode anode) {
@@ -54,55 +54,55 @@ public class SnmpNode {
 		this.root = anode;
 	}
 	
-	class WalkHandler implements Handler<ActionResult> {
-		public void handle(ActionResult event) {
-			final String name = event.getParameter("name", ValueType.STRING).getString();
-			String oid = event.getParameter("OID", ValueType.STRING).getString();
-			if (oid.charAt(0)=='.') oid = oid.substring(1);
-			Node response = node.createChild(name).build();
-			Action act = new Action(Permission.READ, new Handler<ActionResult>() {
-				public void handle(ActionResult event) {
-					node.removeChild(name);
-				}
-			});
-			response.createChild("remove").setAction(act).build().setSerializable(false);
-			response.setAttribute("restoreType", new Value("walk"));
-			walk(response, new OID(oid));
-		}
-	}
+//	class WalkHandler implements Handler<ActionResult> {
+//		public void handle(ActionResult event) {
+//			final String name = event.getParameter("name", ValueType.STRING).getString();
+//			String oid = event.getParameter("OID", ValueType.STRING).getString();
+//			if (oid.charAt(0)=='.') oid = oid.substring(1);
+//			Node response = node.createChild(name).build();
+//			Action act = new Action(Permission.READ, new Handler<ActionResult>() {
+//				public void handle(ActionResult event) {
+//					node.removeChild(name);
+//				}
+//			});
+//			response.createChild("remove").setAction(act).build().setSerializable(false);
+//			response.setAttribute("restoreType", new Value("walk"));
+//			walk(response, new OID(oid));
+//		}
+//	}
 	
-	private void walk(final Node response, final OID oid) {
-		PDU pdu = new PDU();
-		pdu.add(new VariableBinding(oid));
-		pdu.setType(PDU.GETNEXT);
-		ResponseListener listener = new ResponseListener() {
-		     public void onResponse(ResponseEvent event) {
-		       ((Snmp)event.getSource()).cancel(event.getRequest(), this);
-		       System.out.println("Received response PDU is: "+event.getResponse());
-		       if (event.getResponse() != null && !event.getResponse().get(0).isException()) {
-		    	   OID noid = event.getResponse().get(0).getOid();
-		    	   String val = event.getResponse().getVariable(noid).toString();
-		    	   
-		    	   String noidname = noid.toDottedString();
-		    	   NodeBuilder builder = response.createChild(noidname.replace('.', ','));
-		    	   builder.setValueType(ValueType.STRING);
-		    	   builder.setValue(new Value(val));
-		    	   Node vnode = builder.build();
-		    	   vnode.setAttribute("oid", new Value(noid.toString()));
-		    	   vnode.setAttribute("syntax", new Value(event.getResponse().getVariable(noid).getSyntax()));
-		    	   createOidActions(vnode);
-		    	   link.setupOID(vnode, root);
-		    	   walk(response, noid);
-		       }
-		     }
-		   };
-		try {
-			snmp.send(pdu, root.target, null, listener);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+//	private void walk(final Node response, final OID oid) {
+//		PDU pdu = new PDU();
+//		pdu.add(new VariableBinding(oid));
+//		pdu.setType(PDU.GETNEXT);
+//		ResponseListener listener = new ResponseListener() {
+//		     public void onResponse(ResponseEvent event) {
+//		       ((Snmp)event.getSource()).cancel(event.getRequest(), this);
+//		       System.out.println("Received response PDU is: "+event.getResponse());
+//		       if (event.getResponse() != null && !event.getResponse().get(0).isException()) {
+//		    	   OID noid = event.getResponse().get(0).getOid();
+//		    	   String val = event.getResponse().getVariable(noid).toString();
+//		    	   
+//		    	   String noidname = noid.toDottedString();
+//		    	   NodeBuilder builder = response.createChild(noidname.replace('.', ','));
+//		    	   builder.setValueType(ValueType.STRING);
+//		    	   builder.setValue(new Value(val));
+//		    	   Node vnode = builder.build();
+//		    	   vnode.setAttribute("oid", new Value(noid.toString()));
+//		    	   vnode.setAttribute("syntax", new Value(event.getResponse().getVariable(noid).getSyntax()));
+//		    	   createOidActions(vnode);
+//		    	   link.setupOID(vnode, root);
+//		    	   walk(response, noid);
+//		       }
+//		     }
+//		   };
+//		try {
+//			snmp.send(pdu, root.target, null, listener);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
 	
 	class AddFolderHandler implements Handler<ActionResult> {
 		public void handle(ActionResult event) {
@@ -165,8 +165,6 @@ public class SnmpNode {
 	    act = new Action(Permission.READ, new SetHandler(valnode));
 	    act.addParameter(new Parameter("value", ValueType.STRING));
 	    valnode.createChild("set").setAction(act).build().setSerializable(false);
-//	    valnode.setWritable(Writable.WRITE);
-//	    valnode.getListener().setValueHandler(handler);
 	    
 	}
 	

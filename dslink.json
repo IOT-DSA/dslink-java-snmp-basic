@@ -1,7 +1,7 @@
 {
-  "name": "snmp",
+  "name": "snmp-basic",
   "version": "0.0.1",
-  "description": "A dslink for snmp",
+  "description": "A basic dslink for snmp, without MIB parsing",
   "license": "Apache",
   "author": {
     "name": "Daniel Shapiro",
@@ -12,10 +12,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/IOT-DSA/dslink-java-snmp"
+    "url": "https://github.com/IOT-DSA/dslink-java-snmp-basic"
   },
   "bugs": {
-    "url": "https://github.com/IOT-DSA/dslink-java-snmp/issues"
+    "url": "https://github.com/IOT-DSA/dslink-java-snmp-basic/issues"
   },
   "configs": {
     "nodes": {

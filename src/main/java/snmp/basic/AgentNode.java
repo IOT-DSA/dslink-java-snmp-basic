@@ -1,4 +1,4 @@
-package snmp;
+package snmp.basic;
 
 
 import org.dsa.iot.dslink.node.Node;
@@ -14,7 +14,6 @@ import org.snmp4j.smi.Address;
 import org.snmp4j.smi.GenericAddress;
 import org.snmp4j.smi.OctetString;
 import org.vertx.java.core.Handler;
-import org.vertx.java.core.json.JsonArray;
 
 class AgentNode extends SnmpNode {
 	
@@ -27,9 +26,9 @@ class AgentNode extends SnmpNode {
 		this.interval = interval;
 		node.setAttribute("interval", new Value(this.interval));
 		node.setAttribute("ip", new Value(ip));
-		Node tnode = node.createChild("TRAPS").setValueType(ValueType.STRING).build();
-		String emptyjson = new JsonArray().toString();
-		tnode.setValue(new Value(emptyjson));
+//		Node tnode = node.createChild("TRAPS").setValueType(ValueType.STRING).build();
+//		String emptyjson = new JsonArray().toString();
+//		tnode.setValue(new Value(emptyjson));
 		
 		setTarget(ip);
 		
