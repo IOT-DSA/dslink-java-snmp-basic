@@ -1,8 +1,8 @@
 {
-  "name": "snmp-basic",
+  "name": "dslink-java-snmp-basic",
   "version": "0.0.1",
   "description": "A basic dslink for snmp, without MIB parsing",
-  "license": "Apache",
+  "license": "GNU GPL",
   "main": "bin/dslink-java-snmp-basic",
   "author": {
     "name": "Daniel Shapiro",
