@@ -112,7 +112,7 @@ public class SnmpLink {
 		Action act = new Action(Permission.READ, new AddAgentHandler());
 		act.addParameter(new Parameter("name", ValueType.STRING));
 		act.addParameter(new Parameter("ip", ValueType.STRING));
-		act.addParameter(new Parameter("port", ValueType.STRING));
+		act.addParameter(new Parameter("port", ValueType.STRING, new Value(161)));
 		act.addParameter(new Parameter("refreshInterval", ValueType.NUMBER));
 		act.addParameter(new Parameter("communityString", ValueType.STRING, new Value("public")));
 		act.addParameter(new Parameter("retries", ValueType.NUMBER, new Value(2)));
