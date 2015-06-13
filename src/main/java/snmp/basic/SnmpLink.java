@@ -16,6 +16,8 @@ import org.dsa.iot.dslink.node.actions.Parameter;
 import org.dsa.iot.dslink.node.value.Value;
 import org.dsa.iot.dslink.node.value.ValueType;
 import org.dsa.iot.dslink.util.Objects;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.snmp4j.MessageDispatcher;
 import org.snmp4j.Snmp;
 import org.snmp4j.TransportMapping;
@@ -31,10 +33,12 @@ import org.snmp4j.smi.UdpAddress;
 import org.snmp4j.transport.DefaultUdpTransportMapping;
 import org.vertx.java.core.Handler;
 
-
-
-
 public class SnmpLink {
+	private static final Logger LOGGER;
+	
+	static {
+		LOGGER = LoggerFactory.getLogger(SnmpLink.class);
+	}
 	
 	private Node node;
 	Snmp snmp;
@@ -79,7 +83,7 @@ public class SnmpLink {
 //			     public synchronized void processPdu(CommandResponderEvent e) {
 //			    	 PDU command = e.getPDU();
 //			    	 if (command != null) {
-//			    		 System.out.println(command.toString());
+//			    		 LOGGER.debug(command.toString());
 //			    		 String from = ((UdpAddress) e.getPeerAddress()).getInetAddress().getHostAddress();
 //				    	 for (Node child: node.getChildren().values()) {
 //				    		 Value ip = child.getAttribute("ip");
@@ -104,7 +108,7 @@ public class SnmpLink {
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.debug("error: ", e);
 		}
 		
 		restoreLastSession();
