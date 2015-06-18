@@ -15,7 +15,7 @@ public class Main extends DSLinkHandler {
 	public static void main(String[] args) {
 		
 		//args = new String[] { "-b", "http://localhost:8080/conn" };
-		DSLinkFactory.startResponder("basicSnmpResponder", args, new Main());
+		DSLinkFactory.startResponder("SNMP-basic", args, new Main());
 	}
 	
 	@Override

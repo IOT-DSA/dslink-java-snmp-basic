@@ -50,7 +50,7 @@ public class SnmpLink {
 	}
 	
 	public static void start(Node parent) {
-		Node node = parent.createChild("SNMP").build();
+		Node node = parent;
 		final SnmpLink link = new SnmpLink(node);
 		link.init();
 	}
@@ -117,7 +117,7 @@ public class SnmpLink {
 		act.addParameter(new Parameter("name", ValueType.STRING));
 		act.addParameter(new Parameter("ip", ValueType.STRING));
 		act.addParameter(new Parameter("port", ValueType.STRING, new Value(161)));
-		act.addParameter(new Parameter("refreshInterval", ValueType.NUMBER));
+		act.addParameter(new Parameter("pollingInterval", ValueType.NUMBER));
 		act.addParameter(new Parameter("communityString", ValueType.STRING, new Value("public")));
 		act.addParameter(new Parameter("retries", ValueType.NUMBER, new Value(2)));
 		act.addParameter(new Parameter("Timeout", ValueType.NUMBER, new Value(1500)));
@@ -149,7 +149,7 @@ public class SnmpLink {
 			String ip = event.getParameter("ip", ValueType.STRING).getString() + "/" 
 					+ event.getParameter("port", ValueType.STRING).getString();
 			String name = event.getParameter("name", ValueType.STRING).getString();
-			long interval = event.getParameter("refreshInterval", ValueType.NUMBER).getNumber().longValue();
+			long interval = event.getParameter("pollingInterval", ValueType.NUMBER).getNumber().longValue();
 			String comStr = event.getParameter("communityString", ValueType.STRING).getString();
 			int retries = event.getParameter("retries", ValueType.NUMBER).getNumber().intValue();
 			long timeout = event.getParameter("Timeout", ValueType.NUMBER).getNumber().longValue();
