@@ -47,7 +47,9 @@ class AgentNode extends SnmpNode {
 		act.addParameter(new Parameter("communityString", ValueType.STRING, new Value(comString)));
 		act.addParameter(new Parameter("retries", ValueType.NUMBER, new Value(retries)));
 		act.addParameter(new Parameter("Timeout", ValueType.NUMBER, new Value(timeout)));
-		node.createChild("edit").setAction(act).build().setSerializable(false);
+		Node anode = node.getChild("edit");
+		if (anode == null) node.createChild("edit").setAction(act).build().setSerializable(false);
+		else anode.setAction(act);
 	}
 	
 	class EditAgentHandler implements Handler<ActionResult> {
@@ -64,7 +66,6 @@ class AgentNode extends SnmpNode {
 			node.setAttribute("retries", new Value(retries));
 			node.setAttribute("timeout", new Value(timeout));
 			setTarget(ip, comStr, retries, timeout);
-			node.removeChild("edit");
 			makeEditAction(ip, interval, comStr, retries, timeout);
 			
 		}
