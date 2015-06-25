@@ -149,7 +149,7 @@ public class SnmpLink {
 			String ip = event.getParameter("ip", ValueType.STRING).getString() + "/" 
 					+ event.getParameter("port", ValueType.STRING).getString();
 			String name = event.getParameter("name", ValueType.STRING).getString();
-			long interval = event.getParameter("pollingInterval", ValueType.NUMBER).getNumber().longValue();
+			long interval = (long) (1000*event.getParameter("pollingInterval", ValueType.NUMBER).getNumber().doubleValue());
 			String comStr = event.getParameter("communityString", ValueType.STRING).getString();
 			int retries = event.getParameter("retries", ValueType.NUMBER).getNumber().intValue();
 			long timeout = event.getParameter("Timeout", ValueType.NUMBER).getNumber().longValue();
@@ -172,7 +172,7 @@ public class SnmpLink {
                     public void run() {
                     	if (event.getAttribute("oid") != null) agent.sendGetRequest(event);
                     }
-                }, 0, agent.interval, TimeUnit.SECONDS);
+                }, 0, agent.interval, TimeUnit.MILLISECONDS);
                 futures.put(event, fut);
             }
         });

@@ -43,7 +43,7 @@ class AgentNode extends SnmpNode {
 		Action act = new Action(Permission.READ, new EditAgentHandler());
 		act.addParameter(new Parameter("ip", ValueType.STRING, new Value(ip.split("/")[0])));
 		act.addParameter(new Parameter("port", ValueType.STRING, new Value(ip.split("/")[1])));
-		act.addParameter(new Parameter("pollingInterval", ValueType.NUMBER, new Value(interval)));
+		act.addParameter(new Parameter("pollingInterval", ValueType.NUMBER, new Value(((double)interval)/1000)));
 		act.addParameter(new Parameter("communityString", ValueType.STRING, new Value(comString)));
 		act.addParameter(new Parameter("retries", ValueType.NUMBER, new Value(retries)));
 		act.addParameter(new Parameter("Timeout", ValueType.NUMBER, new Value(timeout)));
@@ -56,7 +56,7 @@ class AgentNode extends SnmpNode {
 		public void handle(ActionResult event) {
 			String ip = event.getParameter("ip", ValueType.STRING).getString() + "/" 
 					+ event.getParameter("port", ValueType.STRING).getString();
-			interval = event.getParameter("pollingInterval", ValueType.NUMBER).getNumber().longValue();
+			interval = (long) (1000*event.getParameter("pollingInterval", ValueType.NUMBER).getNumber().doubleValue());
 			String comStr = event.getParameter("communityString", ValueType.STRING).getString();
 			int retries = event.getParameter("retries", ValueType.NUMBER).getNumber().intValue();
 			long timeout = event.getParameter("Timeout", ValueType.NUMBER).getNumber().longValue();
