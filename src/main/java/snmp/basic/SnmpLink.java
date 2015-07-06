@@ -26,8 +26,6 @@ import org.snmp4j.mp.MPv2c;
 import org.snmp4j.mp.MPv3;
 import org.snmp4j.security.SecurityProtocols;
 import org.snmp4j.security.USM;
-import org.snmp4j.smi.Address;
-import org.snmp4j.smi.GenericAddress;
 import org.snmp4j.smi.OctetString;
 import org.snmp4j.smi.UdpAddress;
 import org.snmp4j.transport.DefaultUdpTransportMapping;
@@ -57,15 +55,11 @@ public class SnmpLink {
 	
 	private void init() {
 		
-		Address listenAddress = GenericAddress.parse(System.getProperty("snmp4j.listenAddress","udp:0.0.0.0/162"));
+		//Address listenAddress = GenericAddress.parse(System.getProperty("snmp4j.listenAddress","udp:0.0.0.0/162"));
 		TransportMapping<UdpAddress> transport;
 		
 		try {
-			if (listenAddress instanceof UdpAddress) {
-				transport = new DefaultUdpTransportMapping((UdpAddress)listenAddress);
-			} else {
-				transport = new DefaultUdpTransportMapping();
-			}
+			transport = new DefaultUdpTransportMapping();
 			snmp = new Snmp(transport);
 			SecurityProtocols.getInstance().addDefaultProtocols();
 			MessageDispatcher disp = snmp.getMessageDispatcher();
