@@ -1,6 +1,6 @@
 {
   "name": "dslink-java-snmp-basic",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "A basic dslink for snmp, without MIB parsing",
   "license": "Apache",
   "main": "bin/dslink-java-snmp-basic",

@@ -60,6 +60,9 @@ class AgentNode extends SnmpNode {
 			String comStr = event.getParameter("communityString", ValueType.STRING).getString();
 			int retries = event.getParameter("retries", ValueType.NUMBER).getNumber().intValue();
 			long timeout = event.getParameter("Timeout", ValueType.NUMBER).getNumber().longValue();
+			
+			link.handleEdit(root);
+			
 			node.setAttribute("interval", new Value(interval));
 			node.setAttribute("ip", new Value(ip));
 			node.setAttribute("communityString", new Value(comStr));
