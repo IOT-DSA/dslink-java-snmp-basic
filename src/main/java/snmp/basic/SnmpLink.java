@@ -16,6 +16,7 @@ import org.dsa.iot.dslink.node.actions.Parameter;
 import org.dsa.iot.dslink.node.value.Value;
 import org.dsa.iot.dslink.node.value.ValueType;
 import org.dsa.iot.dslink.util.Objects;
+import org.dsa.iot.dslink.util.handler.Handler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.snmp4j.MessageDispatcher;
@@ -29,7 +30,6 @@ import org.snmp4j.security.USM;
 import org.snmp4j.smi.OctetString;
 import org.snmp4j.smi.UdpAddress;
 import org.snmp4j.transport.DefaultUdpTransportMapping;
-import org.vertx.java.core.Handler;
 
 public class SnmpLink {
 	private static final Logger LOGGER;

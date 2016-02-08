@@ -8,13 +8,12 @@ import org.dsa.iot.dslink.node.actions.ActionResult;
 import org.dsa.iot.dslink.node.actions.Parameter;
 import org.dsa.iot.dslink.node.value.Value;
 import org.dsa.iot.dslink.node.value.ValueType;
+import org.dsa.iot.dslink.util.handler.Handler;
 import org.snmp4j.CommunityTarget;
 import org.snmp4j.mp.SnmpConstants;
 import org.snmp4j.smi.Address;
 import org.snmp4j.smi.GenericAddress;
 import org.snmp4j.smi.OctetString;
-import org.vertx.java.core.Handler;
-
 
 class AgentNode extends SnmpNode {
 	

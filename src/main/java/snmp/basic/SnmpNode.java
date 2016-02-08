@@ -12,6 +12,7 @@ import org.dsa.iot.dslink.node.actions.Parameter;
 import org.dsa.iot.dslink.node.value.Value;
 import org.dsa.iot.dslink.node.value.ValuePair;
 import org.dsa.iot.dslink.node.value.ValueType;
+import org.dsa.iot.dslink.util.handler.Handler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.snmp4j.PDU;
@@ -24,7 +25,6 @@ import org.snmp4j.smi.OID;
 import org.snmp4j.smi.SMIConstants;
 import org.snmp4j.smi.Variable;
 import org.snmp4j.smi.VariableBinding;
-import org.vertx.java.core.Handler;
 
 public class SnmpNode {
 	private static final Logger LOGGER;
